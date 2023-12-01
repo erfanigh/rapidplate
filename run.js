@@ -1,6 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const { spawn, exec } = require('child_process');
+//@ts-check
+
+import fs from "fs-extra";
+import { spawn } from "child_process";
+import path from "path";
 
 const packageJsonPath = path.join(process.cwd(), 'package.json');
 
