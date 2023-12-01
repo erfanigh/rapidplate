@@ -1,6 +1,7 @@
 // @ts-check
-const fs = require('fs-extra');
-const path = require('path');
+
+import * as path from "path";
+import fs from 'fs-extra'
 
 const addRootPath = (_path = '') => {
     if (_path === '' && !_path) throw 'no path specified on `addRootPath`';
@@ -14,9 +15,10 @@ const logError = (condition = false, message = '') => {
 }
 
 ;(async () => {
+    const isWatch = process.argv[2] === '--watch';
     const swcMainFilePath = addRootPath('node_modules/@swc/cli/bin/swc.js');
-    const swcOpts = 'src -d dist -w --copy-files -C module.type=commonjs'.split(' ');
-    
+    const swcOpts = `src -d dist ${isWatch ? '-w' : ''} --copy-files -C module.type=es6`.split(' ');
+
     fs.removeSync(addRootPath('./dist'));
 
     logError(
@@ -33,5 +35,5 @@ const logError = (condition = false, message = '') => {
         process.argv.push(opt)
     });
 
-    require(swcMainFilePath)
+    await import('../node_modules/@swc/cli/bin/swc.js');
 })()
