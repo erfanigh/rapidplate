@@ -1,0 +1,58 @@
+{
+    "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v10/terminal-keeper.json",
+    "theme": "tribe",
+    "active": "default",
+    "activateOnStartup": true,
+    "keepExistingTerminals": false,
+    "sessions": {
+        "default": [
+            {
+                "name": "Terminal",
+                "autoExecuteCommands": false,
+                "icon": "terminal",
+                "color": "terminal.ansiBrightBlack",
+                "commands": [
+                    ""
+                ]
+            },
+            [
+                {
+                    "name": "client:dev",
+                    "icon": "zap",
+                    "color": "terminal.ansiYellow",
+                    "commands": [
+                        "npm run client:dev"
+                    ]
+                },
+                {
+                    "name": "api:dev",
+                    "icon": "zap",
+                    "color": "terminal.ansiYellow",
+                    "commands": [
+                        "npm run api:dev"
+                    ]
+                }
+            ],
+            [
+                {
+                    "name": "css:build",
+                    "icon": "debug-stackframe-focused",
+                    "color": "terminal.ansiBrightBlack",
+                    "autoExecuteCommands": false,
+                    "commands": [
+                        "npm run css:build"
+                    ]
+                },
+                {
+                    "name": "api:build:w",
+                    "icon": "debug-stackframe-focused",
+                    "color": "terminal.ansiBrightBlack",
+                    "autoExecuteCommands": true,
+                    "commands": [
+                        "npm run api:build:w"
+                    ]
+                }
+            ]
+        ]
+    }
+}

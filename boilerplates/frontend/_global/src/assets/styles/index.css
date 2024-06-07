@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@font-face {
+    font-family: commissioner;
+    src: url('../fonts/commissioner/Commissioner-Bold.woff2');
+    font-weight: bold;
+}
+@font-face {
+    font-family: commissioner;
+    src: url('../fonts/commissioner/Commissioner-Light.woff2');
+    font-weight: light;
+}
+@font-face {
+    font-family: commissioner;
+    src: url('../fonts/commissioner/Commissioner-Regular.woff2');
+    font-weight: normal;
+}
+
+:not(code) {
+    font-family: commissioner, yekanBakh;
+}
+
+body, #__next {
+    @apply h-screen w-full flex text-slate-700;
+}
