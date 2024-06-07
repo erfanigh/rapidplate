@@ -23,6 +23,8 @@ const enum promptNames {
     CONFIG_TERMINAL_KEEPER = 'configTerminalKeeper',
 }
 
+const invalidCharsRegex = /[<>:"/\\|?*\x00-\x1F]/
+
 const backendQuestion = {
     type: "list",
     name: 'techName',
@@ -51,12 +53,15 @@ const runCli = async (): Promise<T_Cli> => {
             type: "input",
             name: promptNames.PROJECT_NAME,
             message: "Project Name:",
-            // TODO check project name to not have invalid characters
             validate(input) {
                 const dirExist = isDirExist(input);
-                if(dirExist) {
+                
+                if(invalidCharsRegex.test(input)) 
+                    return `\`${input}\` project name must not include ASCII control characters!`;
+                
+                if(dirExist) 
                     return `\`${input}\` directory already exist!`;
-                }
+                
                 return true;
             }
         },
