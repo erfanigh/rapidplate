@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import { isDirExist } from "./utils.js";
 
-type T_ProjectTechQuestions = {
+export type T_ProjectTechQuestions = {
     techName: string
     projectType: string;
 }
@@ -51,6 +51,7 @@ const runCli = async (): Promise<T_Cli> => {
             type: "input",
             name: promptNames.PROJECT_NAME,
             message: "Project Name:",
+            // TODO check project name to not have invalid characters
             validate(input) {
                 const dirExist = isDirExist(input);
                 if(dirExist) {
