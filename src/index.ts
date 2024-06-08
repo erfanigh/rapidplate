@@ -5,6 +5,7 @@ import fsExtra from 'fs-extra';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import { T_ProjectTechQuestions } from './cli.js';
+import { exec } from 'child_process';
 
 global.__filename = fileURLToPath(import.meta.url);
 global.__dirname = dirname(__filename);
@@ -12,6 +13,9 @@ global.__dirname = dirname(__filename);
 const BOILERPLATE_DIR_NAME = 'boilerplates';
 const packageName = 'rapidplate';
 const boilerplatesDirPath = path.join(__dirname, '..', BOILERPLATE_DIR_NAME)
+const commands = [
+    'git init'
+]
 
 process.title = packageName;
 
@@ -49,7 +53,7 @@ function handleUnderscoredFiles (
             const index = dirPath.indexOf(BOILERPLATE_DIR_NAME);
             let relativePath = dirPath.substring(index + BOILERPLATE_DIR_NAME.length + 1);
             
-            if(!dirPath.includes('_global') && !dirPath.includes(tech.techName))
+            if(tech.techName && !dirPath.includes('_global') && !dirPath.includes(tech.techName))
                 return;
             
             // skip if project type does'nt have any global file/folder
@@ -106,7 +110,7 @@ async function bootstrap() {
     fs.mkdirSync(mainQuestions.projectName, { recursive: true })
 
     projectTechQuestions.forEach((val) => {
-        const src = path.join(boilerplatesDirPath, val.projectType, val.techName);
+        const src = path.join(boilerplatesDirPath, val.projectType, val.techName ?? '');
         const dest = path.join(
             __dirname, 
             '..', 
@@ -124,6 +128,25 @@ async function bootstrap() {
 
         handleUnderscoredFiles(val, alias, mainQuestions.projectName);
     })
+
+    console.log('\nPerformed Commands:');
+
+    for (let index = 0; index < commands.length; index++) {
+        const cmd = commands[index];
+        const baseCmd = `cd ${mainQuestions.projectName}`;
+
+        await new Promise((resolve) => {
+            exec(`${baseCmd} && ${cmd}`, (error, stdout, stderr) => {
+                if(error || stderr) 
+                    return console.error(error || stderr);
+                
+                console.log('-', cmd);
+                resolve(null);
+            })
+        })
+    }
+
+    console.log('\nProject created successfully');
 }
 
 bootstrap();
