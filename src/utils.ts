@@ -5,10 +5,6 @@ export const isDirExist = (_path: string) => Boolean(
     fs.existsSync(path.join(process.cwd(), _path))
 );
 
-export const isDirectory = (_path: string) => {
-    return !/\.[0-9a-z]+$/i.test(_path);
-}
-
 export const deletePathPartsFromEnd = (_path: string, deleteCount: number) => {
     let result = _path;
     let index = 0;

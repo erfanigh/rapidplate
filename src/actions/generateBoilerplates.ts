@@ -2,31 +2,31 @@ import fs from 'fs';
 import path from 'path';
 import fsExtra from 'fs-extra';
 import { handleUnderscoredFiles } from './handleUnderscoredFiles.js';
-import { boilerplatesDirPath } from '../global.js';
+import { boilerplatesDirPath } from '../index.js';
 import { T_Cli } from '../cli.js';
+import { alias } from '../global.js';
 
-const alias = {
-    backend: 'api',
-    frontend: 'client',
-}
-
+// TODO make this more simple
 export const generateBoilerplates = (args: T_Cli) => {
-    fs.mkdirSync(args.mainQuestions.projectName, { recursive: true })
+    fs.mkdirSync(path.join(process.cwd(), args.mainQuestions.projectName), { recursive: true })
     
     args.projectTechQuestions.forEach((val) => {
+        const isMultipleTech = args.projectTechQuestions.length > 1;
+        const currentAlias = isMultipleTech ? alias[val.projectType] : '';
         const src = path.join(boilerplatesDirPath, val.projectType, val.techName ?? '');
         const dest = path.join(
-            __dirname, 
-            '..', 
+            process.cwd(), 
             args.mainQuestions.projectName, 
-            args.projectTechQuestions.length > 1 
-                ? alias[val.projectType] 
-                : ''
+            currentAlias
         );
 
         fsExtra.mkdirSync(dest, { recursive: true });
         fsExtra.copySync(src, dest)
 
-        handleUnderscoredFiles(val, alias, args.mainQuestions.projectName);
+        handleUnderscoredFiles(
+            val, 
+            path.join(dest, isMultipleTech ? '..' : ''),
+            currentAlias
+        );
     })
 }

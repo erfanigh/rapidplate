@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import { packageName } from './global.js';
+import path, { dirname } from 'path';
+import { BOILERPLATE_DIR_NAME, packageName } from './global.js';
 import { performCommands } from './actions/performCommands.js';
 import { generateBoilerplates } from './actions/generateBoilerplates.js';
 
 global.__filename = fileURLToPath(import.meta.url);
 global.__dirname = dirname(__filename);
+
+export const boilerplatesDirPath = path.join(__dirname, '..', BOILERPLATE_DIR_NAME)
 
 process.title = packageName;
 
