@@ -8,7 +8,8 @@ import { alias } from '../global.js';
 
 // TODO make this more simple
 export const generateBoilerplates = (args: T_Cli) => {
-    fs.mkdirSync(path.join(process.cwd(), args.mainQuestions.projectName), { recursive: true })
+    const projName = args.mainQuestions.projectName.trim();
+    fs.mkdirSync(path.join(process.cwd(), projName), { recursive: true })
     
     args.projectTechQuestions.forEach((val) => {
         const isMultipleTech = args.projectTechQuestions.length > 1;
@@ -16,7 +17,7 @@ export const generateBoilerplates = (args: T_Cli) => {
         const src = path.join(boilerplatesDirPath, val.projectType, val.techName ?? '');
         const dest = path.join(
             process.cwd(), 
-            args.mainQuestions.projectName, 
+            projName, 
             currentAlias
         );
 

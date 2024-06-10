@@ -59,12 +59,15 @@ export async function handleUnderscoredFiles (
 
             const dynamicFileResult = dynamicFile(tech.projectType, tech.techName);
             
-            if(typeof dynamicFileResult['data'] !== 'string' || !dynamicFileResult['fileType']?.match(/\.([0-9a-z]+)(?:[\?#]|$)/i))
-                throw new Error('invalid dynamic file. return value must be type of { data: string, fileType: `.${string}` }');
+            if(typeof dynamicFileResult['data'] !== 'string')
+                throw new Error('invalid dynamic file. return value must be type of { data: string, fileType: string | null }');
             
             const newFilePath = path.join(
                 deletePathPartsFromEnd(_destPath, 1), 
-                path.parse(dirPath).name.replace('d_', '') + dynamicFileResult['fileType']
+                (
+                    path.parse(dirPath).name.replace('d_', '') + 
+                    (dynamicFileResult['fileType'] ?? '')
+                )
             );
             
             fs.writeFileSync(newFilePath, dynamicFileResult['data']);
