@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+@font-face {
+    font-family: yekanBakh;
+    src: url('/fonts/yekan-bakh/YekanBakh-Bold.woff2');
+    font-weight: bold;
+}
+@font-face {
+    font-family: yekanBakh;
+    src: url('/fonts/yekan-bakh/YekanBakh-Regular.woff2');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: commissioner;
+    src: url('/fonts/commissioner/Commissioner-Bold.woff2');
+    font-weight: bold;
+}
+@font-face {
+    font-family: commissioner;
+    src: url('/fonts/commissioner/Commissioner-Light.woff2');
+    font-weight: light;
+}
+@font-face {
+    font-family: commissioner;
+    src: url('/fonts/commissioner/Commissioner-Regular.woff2');
+    font-weight: normal;
+}
+
+:not(code) {
+    font-family: commissioner, yekanBakh !important;
+}
+
+.input {
+    @apply border rounded-lg p-4;
+}

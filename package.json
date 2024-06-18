@@ -1,13 +1,14 @@
 {
-  "name": "@erfangharib/rapidplate",
-  "version": "1.0.0",
+  "name": "@erfanigh/rapidplate",
+  "version": "0.1.0",
   "description": "",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
+    "pack": "npm run build && npm pack",
     "start": "node dist/index",
-    "build": "node scripts/build",
-    "build:w": "node scripts/build --watch ./",
+    "build": "swc-build ./",
+    "build:w": "swc-build --watch ./",
     "start:w": "nodemon --exec \"node dist/index\""
   },
   "bin": {
@@ -17,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@erfanigh/swc-build": "^0.1.0",
     "@types/inquirer": "^9.0.7",
     "chokidar": "^3.6.0",
     "commander": "^11.1.0",
