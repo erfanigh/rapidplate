@@ -32,12 +32,12 @@ const configs = {
     }
 }
 
-const Dockerfile = (projectType, techName) => {
+const Dockerfile = (projectName, projectType, techName) => {
     const currentProjectType = configs[projectType];
     const currentProjectTech = currentProjectType?.[techName] ?? '';
 
     if(!currentProjectType)
-        return;
+        return null;
 
     base.splice(5, 0, 
         [currentProjectTech, currentProjectType?.['_global']]

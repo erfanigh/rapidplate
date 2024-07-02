@@ -115,12 +115,12 @@ const terminals = {
     }
 }
 
-const sessions = (projectType, techName) => {
+const sessions = (projectName, projectType, techName) => {
     const currentProjectType = terminals[projectType];
     const currentProjectTech = currentProjectType?.[techName] ?? [];
 
     if(!currentProjectType)
-        throw new Error(`no project type exist with name \`${projectType}\``);
+        throw new Error(`no project type exist with type \`${projectType}\``);
 
     Object.assign(base, currentProjectTech);
     base.sessions.default = [

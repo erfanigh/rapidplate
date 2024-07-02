@@ -1,5 +1,5 @@
 //@ts-check
-// Docker file config file
+// package.json file
 // this a dynamic file (started with `d_`) should be runned.
 
 let base = {
@@ -14,6 +14,7 @@ let base = {
 
 const configs = {
     frontend: {
+        // TODO add css:build to all frontend project
         _global: {},
         next: {
             "scripts": {
@@ -179,7 +180,7 @@ const configs = {
     }
 }
 
-const Dockerfile = (projectType, techName) => {
+const packageJson = (projectName, projectType, techName) => {
     const currentProjectType = configs[projectType];
     const currentProjectTech = currentProjectType?.[techName] ?? '';
 
@@ -195,4 +196,4 @@ const Dockerfile = (projectType, techName) => {
     }
 }
 
-export default Dockerfile;
+export default packageJson;

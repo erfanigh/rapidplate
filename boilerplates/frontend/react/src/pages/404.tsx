@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import notFound from '../assets/images/notFound.jpg'
+import notFound from '../assets/images/placeholder.jpg'
 
 const NoPage = () => {
     return (
