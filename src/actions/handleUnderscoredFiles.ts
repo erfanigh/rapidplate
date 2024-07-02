@@ -7,6 +7,15 @@ import { boilerplatesDirPath } from "../index.js";
 import { deletePathPartsFromEnd } from "../utils.js";
 import { pathToFileURL } from "url";
 
+type T_DynamicFile = (
+    projectName: string, 
+    projectType: string, 
+    techName: string
+) => {
+    data: string,
+    fileType: string | null
+} | null;
+
 // TODO write description
 const resolveDestPath = (
     dirPath: string,
@@ -30,6 +39,7 @@ const resolveDestPath = (
 
 // TODO write comment for this part
 export async function handleUnderscoredFiles (
+    projectName: string, 
     tech: T_ProjectTechQuestions, 
     destPath: string,
     currentAlias: string
@@ -52,14 +62,17 @@ export async function handleUnderscoredFiles (
         }
         
         if(_destPath && path.parse(dirPath).name.startsWith("d_") && dirPath.endsWith('.js')) {
-            const dynamicFile = (await import(pathToFileURL(dirPath).href)).default;
+            const dynamicFile: T_DynamicFile = (await import(pathToFileURL(dirPath).href)).default;
             
             if(typeof dynamicFile !== 'function')
                 throw new Error(`invalid dynamic file. function must be default exported. \nPath: ${dirPath}\n`);
 
-            const dynamicFileResult = dynamicFile(tech.projectType, tech.techName);
+            const dynamicFileResult = dynamicFile(projectName, tech.projectType, tech.techName);
             
-            if(typeof dynamicFileResult['data'] !== 'string')
+            if(!dynamicFileResult)
+                return;
+
+            if(typeof dynamicFileResult?.['data'] !== 'string')
                 throw new Error('invalid dynamic file. return value must be type of { data: string, fileType: string | null }');
             
             const newFilePath = path.join(

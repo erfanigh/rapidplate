@@ -25,6 +25,7 @@ export const generateBoilerplates = (args: T_Cli) => {
         fsExtra.copySync(src, dest)
 
         handleUnderscoredFiles(
+            args.mainQuestions.projectName,
             val, 
             path.join(dest, isMultipleTech ? '..' : ''),
             currentAlias
