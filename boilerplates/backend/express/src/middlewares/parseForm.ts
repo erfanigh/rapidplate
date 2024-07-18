@@ -1,7 +1,7 @@
 import PersistentFile from 'formidable/PersistentFile.js';
 import { NextFunction, Request, Response } from 'express';
 import { getReasonPhrase } from 'http-status-codes';
-import { uploadsDirPath } from '../global/global.js';
+import { uploadsDirPath } from '../global/index.js';
 import formidable from 'formidable';
 
 type T_ExpectedMimeTypes = (

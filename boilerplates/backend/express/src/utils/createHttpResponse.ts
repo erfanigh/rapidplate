@@ -1,7 +1,7 @@
-import { T_HttpErrorObj } from '../../../shared/types/T_HttpErrorObj.js'
+import { T_HttpErrorObj } from '../types/T_HttpErrorObj.js'
 import { getReasonPhrase } from "http-status-codes";
 
-export const createHttpError = (
+export const createHttpResponse = (
     statusCode: number, 
     options?: { title?: string, errors?: any }
 ): T_HttpErrorObj => {

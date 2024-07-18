@@ -9,19 +9,26 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config();
 
-function writeBaseurl(filepath, nodeenv = process.env.NODE_ENV ?? 'development') {
+function writeBaseurl(filepath, nodeenv) {
     let baseurl;
 
-    if (nodeenv === 'production') {
-        baseurl = 'https://example.com';
-    } else if (nodeenv === 'development') {
-        baseurl = 'http://localhost:5000';
-    } else {
-        console.error("Invalid node environment. Please provide either 'production' or 'development'.");
-        return;
+    switch (nodeenv) {
+        case 'production':
+            baseurl = /* ENTER REMOTE URL ENDPOINT */;
+            break;
+
+        case 'development':
+            baseurl = /* ENTER LOCAL URL ENDPOINT */;
+            break;
+
+        default:
+            console.error("Invalid node environment. Please provide either 'production' or 'development'.");
+            return;
     }
 
-    fs.writeFile(filepath, `export const baseurl = "${baseurl}";`, 'utf8', (err) => {
+    const fileData = `export const baseurl = "${baseurl}";`;
+
+    fs.writeFile(filepath, fileData, 'utf8', (err) => {
         if (err) {
             console.error("Error writing file:", err);
         } else {
@@ -41,4 +48,7 @@ program
 const args = program.opts();
 const filepath = path.join(__dirname, '../src/global', 'baseurl.ts');
 
-writeBaseurl(filepath, args.nodeenv);
+writeBaseurl(
+    filepath, 
+    args.nodeenv ?? process.env.NODE_ENV ?? 'development'
+);

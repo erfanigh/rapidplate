@@ -1,4 +1,4 @@
-import { T_Send } from "@erfangharib/use-form-handler/dist/core/useFormHandler";
+import { T_Send } from "@erfanigh/use-form-handler";
 import Form, { inputsAcceptedTypes } from "./form";
 
 interface T_Props {

@@ -1,7 +1,7 @@
-import { validateToken } from './middlewares/validateToken.js';
-import { createHttpError } from './utils/createHttpError.js';
-import { domain, uploadsDirPath } from './global.js';
-import { T_RequestHandler } from './types/T_Router.js';
+import { T_ErrorHandler, T_RequestHandler } from './types/T_Router.js';
+import { createHttpResponse } from './utils/createHttpResponse.js';
+import { isTokenValid } from './middlewares/isTokenValid.js';
+import { domain, uploadsDirPath } from './global/index.js';
 import { authRouter } from './routes/auth/auth.js';
 import cookieParser from 'cookie-parser';
 import express from 'express';
@@ -43,9 +43,9 @@ const setupRoutes = () => {
 	return registeredRoutes;
 }
 const handle404: T_RequestHandler = (req, res, next) => {
-	res.status(404).send(createHttpError(404));
+	res.status(404).send(createHttpResponse(404));
 }
-const handleErrors: T_RequestHandler = (err, req, res, next) => {
+const handleErrors: T_ErrorHandler = (err, req, res, next) => {
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
@@ -57,26 +57,24 @@ const checkUploadsDirExistence = () => {
 		fs.mkdirSync(uploadsDirPath, { recursive: true })
 }
 
-export const bootstrapServer = async () => {
-	app.use(morgan('dev'));
-	app.use(cors(corsConfig));
-	app.use(express.json());
-	app.use('/uploads', express.static(uploadsDirPath));
-	app.use(express.urlencoded({ extended: false }));
-	app.use(cookieParser());
-	app.use(validateToken({
-		reversedAuthRoutes: ['/auth/login']
-	}));
-	
-	checkUploadsDirExistence();
-	const registeredRoutes = setupRoutes();
+app.use(morgan('dev'));
+app.use(cors(corsConfig));
+app.use(express.json());
+app.use('/uploads', express.static(uploadsDirPath));
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(isTokenValid({
+	reversedAuthRoutes: ['/auth/login']
+}));
 
-	app.use(handleErrors);
-	app.use(handle404);
+checkUploadsDirExistence();
+const registeredRoutes = setupRoutes();
 
-	app.listen(port, () => {
-		console.log(`Server running at http://localhost:${port}/`);
-		console.log('Cors:', corsConfig);
-		console.log('Routes:', registeredRoutes);
-	});
-}
+app.use(handleErrors);
+app.use(handle404);
+
+app.listen(port, () => {
+	console.log(`Server running at http://localhost:${port}/`);
+	console.log('Cors:', corsConfig);
+	console.log('Routes:', registeredRoutes);
+});

@@ -1,9 +1,9 @@
-import { authLoginController } from '../controllers/authController.js';
-import { validateReqBody } from '../middlewares/validateReqBody.js';
-import { userSchema } from '../../../shared/schemas.js';
-import { parseForm } from '../middlewares/parseForm.js';
-import { setCookie } from '../utils/setCookie.js';
+import { authLoginController } from './authController.js';
+import { validateReqBody } from '../../middlewares/validateReqBody.js';
+import { parseForm } from '../../middlewares/parseForm.js';
+import { setCookie } from '../../utils/setCookie.js';
 import { T_Router } from '../../types/T_Router.js';
+import { userSchema } from '../../database/schemas.js';
 
 export const authRouter: T_Router = { 
     baseRoute: '/auth', 

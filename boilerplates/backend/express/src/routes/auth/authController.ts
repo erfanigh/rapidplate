@@ -1,13 +1,13 @@
-import { createHttpError } from "../../utils/createHttpError.js";
+import { createHttpResponse } from "../../utils/createHttpResponse.js";
 import { usersModel } from "../../database/models/usersModel.js";
-import { T_User } from "../../../shared/types/T_User.js";
 import { dbClient } from "../../database/dbClient.js";
 import { setCookie } from "../../utils/setCookie.js";
+import { T_User } from "../../types/T_User.js";
 import { Request, Response } from "express";
 import { and, eq } from "drizzle-orm";
 import md5 from "md5";
 
-export const authController = async (req: Request, res: Response) => {
+export const authLoginController = async (req: Request, res: Response) => {
     const { body } = req;
     const user = (
         await dbClient
@@ -25,7 +25,7 @@ export const authController = async (req: Request, res: Response) => {
     }
     
     res.status(404).send(
-        createHttpError(404, { 
+        createHttpResponse(404, { 
             title: 'no user found with this information' 
         })
     );

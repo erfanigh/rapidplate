@@ -1,10 +1,10 @@
-import { userSchema } from '../../../../shared/schemas';
+import { userSchema } from '../../global/schemas';
 import MainLayout from '../../components/mainLayout';
 import AuthLoginForm from '../../components/forms/authLoginForm';
 import { baseurl } from '../../global/baseurl';
 import { apiEndpoints } from '@/global/global';
 import { useState } from 'react';
-import { useFormHandler } from '@erfangharib/use-form-handler';
+import { useFormHandler } from '@erfanigh/use-form-handler';
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);

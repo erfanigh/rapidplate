@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { emailRegex, slugRegex, urlRegex, youtubeEmbedUrlRegex } from '../../../shared/regex';
+import { emailRegex, slugRegex, urlRegex, youtubeEmbedUrlRegex } from '../global/regex';
 
 export type T_YupSchema = { [key: string]: Yup.StringSchema };
 export const setYupLocales = () => {

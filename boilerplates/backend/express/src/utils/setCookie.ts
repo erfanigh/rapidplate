@@ -1,17 +1,15 @@
-import { T_User } from "../../../shared/types/T_User.js";
-import { domain } from "../global/global.js";
+import { domain } from "../global/index.js";
 import { Response } from "express";
 import jwt from 'jsonwebtoken';
 
-export const setCookie = (res: Response, body: { usr_username: T_User['usr_username'] }) => {
+export const setCookie = (res: Response, payload: { [key: string]: any }) => {
     const COOKIE_MAX_AGE_DAYS = 10;
     const expirationDate = new Date();
     const daysInSeconds = COOKIE_MAX_AGE_DAYS * (24 * 60 * 60);
-    const daysInMilliSeconds = daysInSeconds * 1000;
     const jwtToken = 
-        body 
-        ? jwt.sign(body, process.env.SECRET_KEY, {
-            expiresIn: daysInMilliSeconds
+        payload 
+        ? jwt.sign(payload, process.env.SECRET_KEY, {
+            expiresIn: daysInSeconds
         })
         : ''
     
@@ -19,9 +17,9 @@ export const setCookie = (res: Response, body: { usr_username: T_User['usr_usern
 
     res.cookie('token', jwtToken, { 
         expires: expirationDate,
-        maxAge: daysInMilliSeconds,
+        maxAge: daysInSeconds,
         domain: new URL(domain).hostname,
         path: '/',
-        httpOnly: process.env.NODE_ENV === 'development'
+        httpOnly: process.env.NODE_ENV === 'production'
     })
 }

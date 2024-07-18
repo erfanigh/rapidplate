@@ -1,4 +1,4 @@
-import { T_Send } from "@erfangharib/use-form-handler";
+import { T_Send } from "@erfanigh/use-form-handler";
 import Link from "next/link";
 import React, { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 import SubmitBtn from "../buttons/submitBtn";
@@ -38,7 +38,7 @@ const Form = ({ submitButton, send, isLoading, inputs, title, alternativePage, i
             <form
                 onSubmit={send}
                 id={id}
-                className='flex flex-col w-full'
+                className='flex flex-col w-full gap-y-1.5'
             >
                 {
                     inputs.map((props, index) => (
@@ -59,7 +59,7 @@ const Form = ({ submitButton, send, isLoading, inputs, title, alternativePage, i
                     submitButton 
                     ? submitButton
                     : <SubmitBtn 
-                        className='!f-center btn-secondary !w-full mt-3' 
+                        className='!f-center btn-secondary !w-full mt-2' 
                     >
                         {
                             isLoading 

@@ -1,6 +1,9 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { NextRequest, NextResponse } from 'next/server';
 
+/**
+ * Prevent unAuthenticated user from entering specific urls
+*/
 export function middleware(request: NextRequest) {
     const currentDate = new Date();
     const token = (

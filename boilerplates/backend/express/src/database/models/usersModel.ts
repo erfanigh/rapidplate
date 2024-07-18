@@ -1,6 +1,6 @@
-import { T_KeyAsPropNameMap } from '../../../shared/types/T_KeyAsPropNameMap.js';
+import { T_KeyAsPropNameMap } from '../../types/T_KeyAsPropNameMap.js';
 import { pgTable, serial, varchar } from 'drizzle-orm/pg-core';
-import { T_User } from '../../../shared/types/T_User.js';
+import { T_User } from '../../types/T_User.js';
 
 export const usersModel = pgTable('users', {
     usr_id: serial('usr_id').primaryKey().notNull(),

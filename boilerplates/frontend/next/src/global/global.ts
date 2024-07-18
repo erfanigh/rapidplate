@@ -1,5 +1,5 @@
 import axios from "axios"
-import { baseurl } from "./baseurl.js"
+import { baseurl } from "./baseurl"
 
 export const apiEndpoints = {
     auth: {

@@ -63,10 +63,10 @@ module.exports = {
           '@apply f-center text-white': {}
         },
         '.btn-tertiary': {
-          '@apply bg-shekaro-blue-500 hover:shadow-shekaro-blue btn': {}
+          '@apply bg-blue-500 hover:shadow-blue btn': {}
         },
         '.btn-secondary': {
-          '@apply bg-shekaro-red-500 hover:bg-shekaro-red-400 btn': {}
+          '@apply bg-red-500 hover:bg-red-400 btn': {}
         }
       })
     }

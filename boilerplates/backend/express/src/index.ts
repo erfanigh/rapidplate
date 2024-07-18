@@ -9,8 +9,4 @@ global.__dirname = dirname(__filename);
 
 config({ path: path.join(__dirname, '../', '.env') });
 
-;(async function() {
-    const { bootstrapServer } = await import('./server.js');
-    
-    bootstrapServer();
-})();
+import('./server.js');
