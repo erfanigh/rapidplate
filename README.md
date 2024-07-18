@@ -15,6 +15,7 @@ Generate TypeScript boilerplate project
 - Dockerfile included
 - Tailwind config included on frontend projects
 - Configured terminals based on project type. [more info](#terminal-keeper)
+- The Latest package version will be fetched for each dependecy on package.json
 
 ## Usage
 1. Install package globaly
@@ -30,7 +31,7 @@ $ rapidplate
 ## Package.json scripts
 Each project has its own scripts in package.json<br>
 When a script ends with ```:w```, it means the script is in watch mode.<br><br>
-For faster build process **( TypeScript -> Javascript )** we use [@erfanigh/swc-build](https://github.com/erfanigh/swc-build) package on projects except those that have their own compiler like Reactjs
+For faster build process **( TypeScript -> Javascript )** we use [SWC](https://github.com/swc-project) package on projects except those that have their own compiler like Reactjs
 
 ### Build
 build script ends with ```:build```<br>
