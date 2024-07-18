@@ -38,6 +38,7 @@ const resolveDestPath = (
 }
 
 // TODO write comment for this part
+// TODO implement this using class
 export async function handleUnderscoredFiles (
     projectName: string, 
     tech: T_ProjectTechQuestions, 
@@ -67,8 +68,8 @@ export async function handleUnderscoredFiles (
             if(typeof dynamicFile !== 'function')
                 throw new Error(`invalid dynamic file. function must be default exported. \nPath: ${dirPath}\n`);
 
-            const dynamicFileResult = dynamicFile(projectName, tech.projectType, tech.techName);
-            
+            const dynamicFileResult = await dynamicFile(projectName, tech.projectType, tech.techName);
+
             if(!dynamicFileResult)
                 return;
 
@@ -91,11 +92,12 @@ export async function handleUnderscoredFiles (
 
         const folders = fs.readdirSync(dirPath)
 
-        folders.forEach((val) => {
-            findFiles(path.join(dirPath, val))
-        })
+        for (let index = 0; index < folders.length; index++) {
+            const val = folders[index];
+            await findFiles(path.join(dirPath, val))
+        }
     }
-
+    
     // TODO fix this part
     await findFiles(path.join(boilerplatesDirPath, tech.projectType))
     await findFiles(path.join(boilerplatesDirPath, '_global'))

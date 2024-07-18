@@ -7,11 +7,12 @@ import { T_Cli } from '../cli.js';
 import { alias } from '../global.js';
 
 // TODO make this more simple
-export const generateBoilerplates = (args: T_Cli) => {
+export const generateBoilerplates = async (args: T_Cli) => {
     const projName = args.mainQuestions.projectName.trim();
     fs.mkdirSync(path.join(process.cwd(), projName), { recursive: true })
     
-    args.projectTechQuestions.forEach((val) => {
+    for (let index = 0; index < args.projectTechQuestions.length; index++) {
+        const val = args.projectTechQuestions[index];
         const isMultipleTech = args.projectTechQuestions.length > 1;
         const currentAlias = isMultipleTech ? alias[val.projectType] : '';
         const src = path.join(boilerplatesDirPath, val.projectType, val.techName ?? '');
@@ -24,11 +25,11 @@ export const generateBoilerplates = (args: T_Cli) => {
         fsExtra.mkdirSync(dest, { recursive: true });
         fsExtra.copySync(src, dest)
 
-        handleUnderscoredFiles(
+        await handleUnderscoredFiles(
             args.mainQuestions.projectName,
             val, 
             path.join(dest, isMultipleTech ? '..' : ''),
             currentAlias
         );
-    })
+    }
 }

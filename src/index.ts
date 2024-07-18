@@ -9,18 +9,20 @@ import { generateBoilerplates } from './actions/generateBoilerplates.js';
 global.__filename = fileURLToPath(import.meta.url);
 global.__dirname = dirname(__filename);
 
-export const boilerplatesDirPath = path.join(__dirname, '..', BOILERPLATE_DIR_NAME)
-
 process.title = packageName;
+
+export const boilerplatesDirPath = path.join(__dirname, '..', BOILERPLATE_DIR_NAME)
 
 async function bootstrap() {
     const runCli = (await import('./cli.js')).default;
     const cliInputs = await runCli();
 
-    generateBoilerplates(cliInputs);
+    console.log('\nGenerating Project..');
+
+    await generateBoilerplates(cliInputs);
     await performCommands(cliInputs.mainQuestions.projectName);
 
-    console.log('\nProject created successfully');
+    console.log('\nProject generated successfully');
 }
 
 bootstrap();
